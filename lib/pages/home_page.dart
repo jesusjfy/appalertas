@@ -8,6 +8,7 @@ import '../services/whatsapp_service.dart';
 class HomePage extends StatelessWidget {
   final NotificationService _notificationService = NotificationService();
   final SmsService _smsService = SmsService();
+  final CallService _callService = CallService();
 
   HomePage() {
     _notificationService.initialize();
@@ -25,27 +26,27 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                _notificationService.showNotification('Test', 'This is a test notification');
+                _notificationService.showNotification('Test', 'Hola');
               },
-              child: Text('Show Notification'),
+              child: Text('Ver Notificación'),
             ),
             ElevatedButton(
               onPressed: () {
-                _smsService.sendSmsMessage('This is a test message', '+51931686610');
+                _smsService.sendSmsMessage('Mensaje enviado', '+15551234567');
               },
-              child: Text('Send SMS'),
+              child: Text('Enviar SMS'),
             ),
             ElevatedButton(
               onPressed: () {
-                makeCall('+51931686610');
+                _callService.makePhoneCall('+15551234567');
               },
-              child: Text('Make Call'),
+              child: Text('Realizar llamada'),
             ),
             ElevatedButton(
               onPressed: () {
-                sendWhatsAppMessage('+51931686610', 'This is a test message');
+                sendWhatsAppMessage('+51931686610', 'Hola');
               },
-              child: Text('Send WhatsApp Message'),
+              child: Text('Enviar mensaje WhatsApp'),
             ),
           ],
         ),

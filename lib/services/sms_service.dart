@@ -9,7 +9,9 @@ class SmsService {
       telephony.sendSms(
         to: recipient,
         message: message,
-      );
+      ).catchError((error) {
+        print("Error sending SMS: $error");
+      });
     } else {
       print("Permissions not granted");
     }
