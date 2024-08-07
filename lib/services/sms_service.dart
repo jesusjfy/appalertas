@@ -16,4 +16,13 @@ class SmsService {
       print("Permissions not granted");
     }
   }
+
+  Future<void> sendSms(String message, String recipient) async {
+    try {
+      await telephony.sendSms(
+          to: recipient, message: message);
+    } catch (e) {
+      print('Error sending SMS: $e');
+    }
+  }
 }
