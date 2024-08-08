@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appalertas">
+    package="pe.tecsup.appalertas">
 
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
@@ -41,7 +41,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- <receiver android:name="com.example.appalertas.SmsReceiver" android:exported="true">
+        <!-- <receiver android:name="pe.tecsup.appalertas.SmsReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>

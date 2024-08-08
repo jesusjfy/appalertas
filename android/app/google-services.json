@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "846386062249",
+    "project_id": "fir-g8-5f03c",
+    "storage_bucket": "fir-g8-5f03c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846386062249:android:87725ab02d1ddc0b7b1ab8",
+        "android_client_info": {
+          "package_name": "pe.codigog8.appvotacion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846386062249-gd6r2fvh7pvq21k77sc3j3pautht25u1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.codigog8.appvotacion",
+            "certificate_hash": "8e1499e2208e2ab0a04988b5d90cca227bc1f084"
+          }
+        },
+        {
+          "client_id": "846386062249-re9ejvat9o1quavptlsb233nnfebcb7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZBIbSROeyWW_-oB13T7M8vWqV2gSZ20k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846386062249-re9ejvat9o1quavptlsb233nnfebcb7a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "846386062249-ba9eipdq6j172akukejg2temgr6ps94o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pe.tecsup.appalertas"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846386062249:android:e5767c1795f93e267b1ab8",
+        "android_client_info": {
+          "package_name": "pe.tecsup.appalertas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846386062249-re9ejvat9o1quavptlsb233nnfebcb7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZBIbSROeyWW_-oB13T7M8vWqV2gSZ20k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846386062249-re9ejvat9o1quavptlsb233nnfebcb7a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "846386062249-ba9eipdq6j172akukejg2temgr6ps94o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pe.tecsup.appalertas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
