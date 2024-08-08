@@ -56,8 +56,8 @@ class UserListPage extends StatelessWidget {
             subtitle: Text(user.phoneNumber),
             trailing: SizedBox(
               width: 220,
-              child: Wrap(
-                spacing: 8.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                     icon: Icon(Icons.notifications),

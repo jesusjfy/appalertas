@@ -13,8 +13,14 @@ class NotificationService {
 
   Future<void> showNotification(String title, String body) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            importance: Importance.max, priority: Priority.high, showWhen: false);
+        AndroidNotificationDetails(
+            '1', 
+            '1',
+            importance: Importance.max, 
+            priority: Priority.high, 
+            showWhen: false,
+            icon: '@mipmap/ic_launcher'
+        );
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
