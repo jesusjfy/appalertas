@@ -28,11 +28,11 @@ class UserListPage extends StatelessWidget {
   final WhatsappService _whatsappService = WhatsappService();
 
   void sendNotification(User user) {
-    _notificationService.showNotification('Hello ${user.name}', 'Proceso finalizado sin errores');
+    _notificationService.showNotification('Hola ${user.name}', 'Proceso finalizado sin errores');
   }
 
   Future<void> sendSms(User user) async {
-    await _smsService.sendSms('Hello ${user.name}', user.phoneNumber);
+    await _smsService.sendSms('Hola ${user.name}', user.phoneNumber);
   }
 
   Future<void> makePhoneCall(User user) async {
@@ -40,7 +40,7 @@ class UserListPage extends StatelessWidget {
   }
 
   Future<void> sendWhatsappMessage(User user) async {
-    await _whatsappService.sendWhatsappMessage(user.whatsappNumber, 'Hello ${user.name}');
+    await _whatsappService.sendWhatsappMessage(user.whatsappNumber, 'Hola ${user.name}');
   }
 
   Future<void> _signOut(BuildContext context) async {
@@ -55,7 +55,8 @@ class UserListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listado de usuarios'),
+        title: Text('Trabajadores',style: TextStyle(color: Colors.black)),
+        backgroundColor: const Color(0xffb144094),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -63,39 +64,63 @@ class UserListPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          return ListTile(
-            title: Text(user.name),
-            subtitle: Text(user.phoneNumber),
-            trailing: SizedBox(
-              width: 220,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications),
-                    onPressed: () => sendNotification(user),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.message),
-                    onPressed: () => sendSms(user),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.call),
-                    onPressed: () => makePhoneCall(user),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.chat),
-                    onPressed: () => sendWhatsappMessage(user),
-                  ),
-                ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [const Color(0xffb144094), const Color(0xffb144094)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: ListView.builder(
+          padding: EdgeInsets.all(8.0),
+          itemCount: users.length,
+          itemBuilder: (context, index) {
+            final user = users[index];
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 8.0),
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
               ),
-            ),
-          );
-        },
+              child: ListTile(
+                contentPadding: EdgeInsets.all(16.0),
+                title: Text(
+                  user.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                subtitle: Text(
+                  user.phoneNumber,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+                trailing: SizedBox(
+                  width: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.notifications, color: Colors.blue),
+                        onPressed: () => sendNotification(user),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.message, color: Colors.green),
+                        onPressed: () => sendSms(user),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.call, color: Colors.orange),
+                        onPressed: () => makePhoneCall(user),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.chat, color: Colors.teal),
+                        onPressed: () => sendWhatsappMessage(user),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
