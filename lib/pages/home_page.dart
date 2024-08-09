@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
   final NotificationService _notificationService = NotificationService();
   final SmsService _smsService = SmsService();
   final CallService _callService = CallService();
+  final WhatsappService _whatsappService = WhatsappService();
 
   HomePage() {
     _notificationService.initialize();
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                sendWhatsAppMessage('+51931686610', 'Hola');
+                _whatsappService.sendWhatsappMessage('+51931686610', 'Hola');
               },
               child: Text('Enviar mensaje WhatsApp'),
             ),

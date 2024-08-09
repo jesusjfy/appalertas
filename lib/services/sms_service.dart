@@ -10,10 +10,10 @@ class SmsService {
         to: recipient,
         message: message,
       ).catchError((error) {
-        print("Error sending SMS: $error");
+        print("Error enviando SMS: $error");
       });
     } else {
-      print("Permissions not granted");
+      print("No tiene permiso suficiente");
     }
   }
 
@@ -22,7 +22,7 @@ class SmsService {
       await telephony.sendSms(
           to: recipient, message: message);
     } catch (e) {
-      print('Error sending SMS: $e');
+      print('Error enviando SMS: $e');
     }
   }
 }

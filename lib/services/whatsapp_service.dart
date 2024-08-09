@@ -1,14 +1,5 @@
 import 'package:url_launcher/url_launcher.dart';
 
-void sendWhatsAppMessage(String phoneNumber, String message) async {
-  final url = "https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}";
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
 class WhatsappService {
   Future<void> sendWhatsappMessage(String phoneNumber, String message) async {
     final Uri whatsappUri = Uri(
@@ -21,13 +12,13 @@ class WhatsappService {
       },
     );
     try {
-      if (await canLaunch(whatsappUri.toString())) {
-        await launch(whatsappUri.toString());
+      if (await launchUrl(whatsappUri)) {
+        await launchUrl(whatsappUri);
       } else {
-        print('Could not launch $whatsappUri');
+        print('No se puede lanzar $whatsappUri');
       }
     } catch (e) {
-      print('Error sending WhatsApp message: $e');
+      print('Error enviando mensaje de WhatsApp: $e');
     }
   }
 }

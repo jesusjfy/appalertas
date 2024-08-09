@@ -11,9 +11,9 @@ class CallService {
       if (await canLaunchUrl(telUri)) {
         await launchUrl(telUri);
       }
-      //  else {
-      //   print('No se pudo lanzar $telUri');
-      // }
+       else {
+        print('No se pudo lanzar $telUri');
+      }
     } catch (e) {
       print('Error al intentar realizar la llamada: $e');
     }

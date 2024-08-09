@@ -15,14 +15,15 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
-  bool _isLoading = false;
+  bool _isLoadingEmail = false;
+  bool _isLoadingGoogle = false;
   String? _errorMessage;
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
-      _isLoading = true;
+      _isLoadingEmail = true;
       _errorMessage = null;
     });
 
@@ -31,6 +32,8 @@ class _LoginPageState extends State<LoginPage> {
         email: _email,
         password: _password,
       );
+      User? user = userCredential.user;
+      print('Usuario logueado: ${user?.email}');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => UserListPage()),
@@ -41,38 +44,46 @@ class _LoginPageState extends State<LoginPage> {
       });
     } finally {
       setState(() {
-        _isLoading = false;
+        _isLoadingEmail = false;
       });
     }
   }
 
   Future<void> _loginWithGoogle() async {
     setState(() {
-      _isLoading = true;
+      _isLoadingGoogle = true;
       _errorMessage = null;
     });
 
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) return;
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleUser == null) {
+        setState(() {
+          _isLoadingGoogle = false;
+        });
+        return;
+      }
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential userCredential = await _auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      User? user = userCredential.user;
+      print('Usuario logueado: ${user?.email}');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => UserListPage()),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
-        print("error");
         _errorMessage = e.message;
       });
     } finally {
       setState(() {
-        _isLoading = false;
+        _isLoadingGoogle = false;
       });
     }
   }
@@ -116,14 +127,14 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               SizedBox(height: 20),
-              _isLoading
+              _isLoadingEmail
                   ? CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: _login,
                       child: Text('Iniciar Sesión'),
                     ),
               SizedBox(height: 20),
-              _isLoading
+              _isLoadingGoogle
                   ? CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: _loginWithGoogle,
