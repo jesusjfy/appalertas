@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -5,6 +6,7 @@ import '../services/call_service.dart';
 import '../services/notification_service.dart';
 import '../services/sms_service.dart';
 import '../services/whatsapp_service.dart';
+import 'login_page.dart';
 
 class UserListPage extends StatelessWidget {
   final List<User> users = [
@@ -41,11 +43,25 @@ class UserListPage extends StatelessWidget {
     await _whatsappService.sendWhatsappMessage(user.whatsappNumber, 'Hello ${user.name}');
   }
 
+  Future<void> _signOut(BuildContext context) async {
+    await firebase_auth.FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Listado de usuarios'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () => _signOut(context),
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: users.length,
