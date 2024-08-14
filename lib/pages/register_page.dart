@@ -24,8 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
         email: _email,
         password: _password,
       );
