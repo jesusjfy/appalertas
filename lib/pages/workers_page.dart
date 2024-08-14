@@ -14,36 +14,57 @@ class WorkersPage extends StatelessWidget {
   final SmsService _smsService = SmsService();
   final WhatsappService _whatsappService = WhatsappService();
 
-  void _sendSms(String phoneNumber) async {
-    await _smsService.sendSms('Ocurrió un error, favor de revisar su bandeja de entrada!', phoneNumber);
+  void _notifyHead(BuildContext context) async {
+    try {
+      await _smsService.sendSms(area.head.phoneNumber,
+          'Ocurrió un error, favor de revisar su bandeja de entrada!');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('SMS enviado al jefe de área: ${area.head.name}')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al notificar al jefe de área: $e')),
+      );
+    }
   }
 
-  void _makePhoneCall(String phoneNumber) async {
-    await _callService.makePhoneCall(phoneNumber);
+  void _notifyWorkers(BuildContext context) async {
+    try {
+      for (var worker in area.workers) {
+        await _smsService.sendSms(worker.phoneNumber,
+            'Ocurrió un error, favor de revisar su bandeja de entrada!');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('SMS enviados a los trabajadores del área')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al notificar a los trabajadores: $e')),
+      );
+    }
   }
 
-  void _sendWhatsappMessage(String whatsappNumber) async {
-    await _whatsappService.sendWhatsappMessage(whatsappNumber, 'Ocurrió un error, favor de revisar su bandeja de entrada!');
-  }
+  void _notifyAll(BuildContext context) async {
+    try {
+      await _smsService.sendSms(area.head.phoneNumber,
+          'Ocurrió un error, favor de revisar su bandeja de entrada!');
 
-  void _notifyHead(BuildContext context) async{
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notificando al jefe de área: ${area.head.name}')),
-    );
-  }
+      for (var worker in area.workers) {
+        await _smsService.sendSms(worker.phoneNumber,
+            'Ocurrió un error, favor de revisar su bandeja de entrada!');
+      }
 
-  void _notifyWorkers(BuildContext context) {
-    // Implementa la lógica para notificar a los trabajadores
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notificando a los trabajadores del área')),
-    );
-  }
-
-  void _notifyAll(BuildContext context) {
-    // Implementa la lógica para notificar a todos los miembros del área, incluyendo al jefe
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notificando a todos en el área, incluyendo al jefe')),
-    );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content:
+                Text('SMS enviados a todos en el área, incluyendo al jefe')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al notificar a todos en el área: $e')),
+      );
+    }
   }
 
   @override
@@ -134,17 +155,22 @@ class WorkersPage extends StatelessWidget {
                         children: [
                           IconButton(
                             icon: Icon(Icons.message),
-                            onPressed: () => _sendSms(worker.phoneNumber),
+                            onPressed: () => _smsService.sendSms(
+                                worker.phoneNumber,
+                                'Ocurrió un error, favor de revisar su bandeja de entrada!'),
                             tooltip: 'Enviar SMS',
                           ),
                           IconButton(
                             icon: Icon(Icons.call),
-                            onPressed: () => _makePhoneCall(worker.phoneNumber),
+                            onPressed: () =>
+                                _callService.makePhoneCall(worker.phoneNumber),
                             tooltip: 'Llamar',
                           ),
                           IconButton(
                             icon: Icon(Icons.chat),
-                            onPressed: () => _sendWhatsappMessage(worker.whatsappNumber),
+                            onPressed: () => _whatsappService.sendWhatsappMessage(
+                                worker.whatsappNumber,
+                                'Ocurrió un error, favor de revisar su bandeja de entrada!'),
                             tooltip: 'WhatsApp',
                           ),
                         ],
