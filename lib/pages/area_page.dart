@@ -50,7 +50,7 @@ class AreaPage extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        'Jefe de área: ${area.head}',
+                        'Jefe de área: ${area.head.name}',
                         style: TextStyle(color: Colors.blue[600]),
                       ),
                       trailing: Icon(Icons.arrow_forward_ios, color: Colors.blue[800]),

@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 
 import '../models/area_model.dart';
+import '../services/call_service.dart';
+import '../services/sms_service.dart';
+import '../services/whatsapp_service.dart';
 
 class WorkersPage extends StatelessWidget {
   final Area area;
 
   WorkersPage({required this.area});
 
-  void _notifyHead(BuildContext context) {
-    // Implementa la lógica para notificar al jefe del área
+  final CallService _callService = CallService();
+  final SmsService _smsService = SmsService();
+  final WhatsappService _whatsappService = WhatsappService();
+
+  void _sendSms(String phoneNumber) async {
+    await _smsService.sendSms('Ocurrió un error, favor de revisar su bandeja de entrada!', phoneNumber);
+  }
+
+  void _makePhoneCall(String phoneNumber) async {
+    await _callService.makePhoneCall(phoneNumber);
+  }
+
+  void _sendWhatsappMessage(String whatsappNumber) async {
+    await _whatsappService.sendWhatsappMessage(whatsappNumber, 'Ocurrió un error, favor de revisar su bandeja de entrada!');
+  }
+
+  void _notifyHead(BuildContext context) async{
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notificando al jefe de área: ${area.head}')),
+      SnackBar(content: Text('Notificando al jefe de área: ${area.head.name}')),
     );
   }
 
@@ -36,7 +54,7 @@ class WorkersPage extends StatelessWidget {
         backgroundColor: Colors.blue[800],
         actions: [
           PopupMenuButton<String>(
-            onSelected: (value) {
+            onSelected: (value) async {
               switch (value) {
                 case 'Notify Head':
                   _notifyHead(context);
@@ -95,6 +113,7 @@ class WorkersPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
+                      contentPadding: EdgeInsets.all(16),
                       title: Text(
                         worker.name,
                         style: TextStyle(
@@ -102,6 +121,33 @@ class WorkersPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.blue[800],
                         ),
+                      ),
+                      subtitle: Text(
+                        worker.position,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue[600],
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.message),
+                            onPressed: () => _sendSms(worker.phoneNumber),
+                            tooltip: 'Enviar SMS',
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.call),
+                            onPressed: () => _makePhoneCall(worker.phoneNumber),
+                            tooltip: 'Llamar',
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.chat),
+                            onPressed: () => _sendWhatsappMessage(worker.whatsappNumber),
+                            tooltip: 'WhatsApp',
+                          ),
+                        ],
                       ),
                     ),
                   );
