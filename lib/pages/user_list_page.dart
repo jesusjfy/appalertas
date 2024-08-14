@@ -55,8 +55,9 @@ class UserListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Trabajadores',style: TextStyle(color: Colors.black)),
+        title: Text('Trabajadores'),
         backgroundColor: const Color(0xffb144094),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -67,7 +68,7 @@ class UserListPage extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [const Color(0xffb144094), const Color(0xffb144094)],
+            colors: [const Color.fromARGB(248, 100, 137, 209), const Color.fromARGB(250, 31, 72, 148)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

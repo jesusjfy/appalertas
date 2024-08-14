@@ -50,12 +50,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Imagen de fondo
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/images/1.jpg'), // Ruta a tu imagen de fondo
+                    'assets/images/1.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -66,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
                   color: Colors.white
-                      .withOpacity(0.7), // Transparencia del formulario
+                      .withOpacity(0.7),
                   elevation: 8.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.0),

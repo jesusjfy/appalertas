@@ -87,11 +87,10 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/1.jpg'), // Ruta a tu imagen de fondo
+                image: AssetImage('assets/images/1.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -101,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
-                  color: Colors.white.withOpacity(0.7),  // Transparencia del formulario
+                  color: Colors.white.withOpacity(0.7),
                   elevation: 8.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.0),
