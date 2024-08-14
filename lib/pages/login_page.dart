@@ -1,4 +1,5 @@
-import 'package:appalertas/pages/user_list_page.dart';
+//import 'package:appalertas/pages/user_list_page.dart';
+import 'package:appalertas/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => UserListPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
       UserCredential userCredential = await _auth.signInWithCredential(credential);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => UserListPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {

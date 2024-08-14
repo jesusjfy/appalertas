@@ -1,53 +1,86 @@
+import 'package:appalertas/models/area_model.dart';
+import 'package:appalertas/models/company_model.dart';
+import 'package:appalertas/models/user_model.dart';
+import 'package:appalertas/pages/area_page.dart';
 import 'package:flutter/material.dart';
 
-import '../services/call_service.dart';
-import '../services/notification_service.dart';
-import '../services/sms_service.dart';
-import '../services/whatsapp_service.dart';
-
 class HomePage extends StatelessWidget {
-  final NotificationService _notificationService = NotificationService();
-  final SmsService _smsService = SmsService();
-  final CallService _callService = CallService();
-  final WhatsappService _whatsappService = WhatsappService();
-
-  HomePage() {
-    _notificationService.initialize();
-  }
+  final List<Company> companies = [
+    Company(name: 'Empresa A', areas: [
+      Area(name: 'Área 1', head: 'Jefe A1', workers: [
+        User(name: 'Trabajador 1', phoneNumber: '', whatsappNumber: '', position: 'Posición 1'),
+        User(name: 'Trabajador 2', phoneNumber: '', whatsappNumber: '', position: 'Posición 2'),
+      ]),
+      Area(name: 'Área 2', head: 'Jefe A2', workers: [
+        User(name: 'Trabajador 3', phoneNumber: '', whatsappNumber: '', position: 'Posición 3'),
+        User(name: 'Trabajador 4', phoneNumber: '', whatsappNumber: '', position: 'Posición 4'),
+      ]),
+    ]),
+    Company(name: 'Empresa B', areas: [
+      Area(name: 'Área 3', head: 'Jefe B1', workers: [
+        User(name: 'Trabajador 5', phoneNumber: '', whatsappNumber: '', position: 'Posición 5'),
+        User(name: 'Trabajador 6', phoneNumber: '', whatsappNumber: '', position: 'Posición 6'),
+      ]),
+      Area(name: 'Área 4', head: 'Jefe B2', workers: [
+        User(name: 'Trabajador 7', phoneNumber: '', whatsappNumber: '', position: 'Posición 7'),
+        User(name: 'Trabajador 8', phoneNumber: '', whatsappNumber: '', position: 'Posición 8'),
+      ]),
+    ]),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alert App'),
+        title: Text('Empresas'),
+        backgroundColor: Colors.blue[800],
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                _notificationService.showNotification('Test', 'Hola');
-              },
-              child: Text('Ver Notificación'),
+          children: [
+            Text(
+              'Selecciona una empresa',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue[900],
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                _smsService.sendSmsMessage('Mensaje enviado', '+15551234567');
-              },
-              child: Text('Enviar SMS'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _callService.makePhoneCall('+15551234567');
-              },
-              child: Text('Realizar llamada'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _whatsappService.sendWhatsappMessage('+51931686610', 'Hola');
-              },
-              child: Text('Enviar mensaje WhatsApp'),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: companies.length,
+                itemBuilder: (context, index) {
+                  final company = companies[index];
+                  return Card(
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        company.name,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue[800],
+                        ),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios, color: Colors.blue[800]),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AreaPage(company: company),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
