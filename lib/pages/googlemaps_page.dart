@@ -1,11 +1,24 @@
+import 'package:appalertas/models/company_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapPage extends StatelessWidget {
-  final LatLng _center = const LatLng(-12.0464, -77.0428);
+  final List<Company> companies;
+
+  GoogleMapPage({required this.companies});
 
   @override
   Widget build(BuildContext context) {
+    final Set<Marker> markers = companies.map((company) {
+      return Marker(
+        markerId: MarkerId(company.name),
+        position: LatLng(company.latitude, company.longitude),
+        infoWindow: InfoWindow(
+          title: company.name,
+        ),
+      );
+    }).toSet();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Google Maps'),
@@ -13,9 +26,15 @@ class GoogleMapPage extends StatelessWidget {
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 11.0,
+          target: LatLng(companies.isNotEmpty
+              ? companies[0].latitude
+              : 0.0,
+              companies.isNotEmpty
+              ? companies[0].longitude
+              : 0.0),
+          zoom: 4.5,
         ),
+        markers: markers,
       ),
     );
   }

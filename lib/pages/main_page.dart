@@ -11,13 +11,20 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  final HomePage _homePage = HomePage();
 
-  final List<Widget> _pages = [
-    HomePage(),
-    NotificationHistoryPage(),
-    GoogleMapPage(),
-    SettingsPage(),
-  ];
+  final List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _pages.addAll([
+      HomePage(),
+      NotificationHistoryPage(),
+      GoogleMapPage(companies: _homePage.companies),
+      SettingsPage(),
+    ]);
+  }
 
   void _onItemTapped(int index) {
     setState(() {
