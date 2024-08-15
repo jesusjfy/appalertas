@@ -48,7 +48,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            label: 'Maps',
+            label: 'Mapa',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
