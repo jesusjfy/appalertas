@@ -27,6 +27,7 @@ dependencies:
   #workmanager: ^0.5.2
   
   cupertino_icons: ^1.0.6
+  google_maps_flutter: ^2.9.0
 
 dev_dependencies:
   flutter_test:
