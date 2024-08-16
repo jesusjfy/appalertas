@@ -12,4 +12,13 @@ class Company {
     required this.latitude,
     required this.longitude,
   });
+
+  factory Company.fromFirestore(Map<String, dynamic> data, List<Map<String, dynamic>> areasData) {
+    return Company(
+      name: data['name'] ?? '',
+      areas: areasData.map((areaData) => Area.fromFirestore(areaData)).toList(),
+      latitude: (data['latitude'] as num?)?.toDouble() ?? 0.0,
+      longitude: (data['longitude'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
 }

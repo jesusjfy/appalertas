@@ -1,7 +1,9 @@
+import 'package:appalertas/models/company_model.dart';
 import 'package:appalertas/pages/googlemaps_page.dart';
 import 'package:appalertas/pages/home_page.dart';
 import 'package:appalertas/pages/notificationhistory_page.dart';
 import 'package:appalertas/pages/settings_page.dart';
+import 'package:appalertas/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -11,19 +13,14 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final HomePage _homePage = HomePage();
-
-  final List<Widget> _pages = [];
+  final FirestoreService _firestoreService = FirestoreService();
+  late Future<List<Company>> _companiesFuture;
 
   @override
   void initState() {
     super.initState();
-    _pages.addAll([
-      HomePage(),
-      NotificationHistoryPage(),
-      GoogleMapPage(companies: _homePage.companies),
-      SettingsPage(),
-    ]);
+    
+    _companiesFuture = _firestoreService.getCompanies();
   }
 
   void _onItemTapped(int index) {
@@ -34,42 +31,68 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    return FutureBuilder<List<Company>>(
+      future: _companiesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(child: Text('Error: ${snapshot.error}')),
+          );
+        }
+
+        List<Company> companies = snapshot.data!;
+
+        final List<Widget> _pages = [
+          HomePage(companies: companies),
+          NotificationHistoryPage(),
+          GoogleMapPage(companies: companies),
+          SettingsPage(),
+        ];
+
+        return Scaffold(
+          body: _pages[_selectedIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'Historial',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.map),
+                label: 'Mapa',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Configuración',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.blue[800],
+            unselectedItemColor: Colors.grey[600],
+            backgroundColor: Colors.white,
+            elevation: 10,
+            selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+            unselectedLabelStyle: TextStyle(
+              fontSize: 12,
+            ),
+            type: BottomNavigationBarType.fixed,
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'Historial',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Mapa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configuración',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[800],
-        unselectedItemColor: Colors.grey[600],
-        backgroundColor: Colors.white,
-        elevation: 10,
-        selectedLabelStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-        ),
-        unselectedLabelStyle: TextStyle(
-          fontSize: 12,
-        ),
-        type: BottomNavigationBarType.fixed,
-        onTap: _onItemTapped,
-      ),
+        );
+      },
     );
   }
 }

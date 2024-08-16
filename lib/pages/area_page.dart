@@ -10,6 +10,7 @@ class AreaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Company: ${company.name}, Areas: ${company.areas.length}');
     return Scaffold(
       appBar: AppBar(
         title: Text('Áreas de ${company.name}'),
