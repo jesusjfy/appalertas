@@ -241,4 +241,29 @@ class FirestoreService {
       await areas.add(area);
     }
   }
+
+  Future<void> addNotificationTemplate() async {
+    CollectionReference templates =
+        FirebaseFirestore.instance.collection('notification_templates');
+
+    await templates.doc('error_message').set({
+      'title': 'Error',
+      'body':
+          'Ocurrió un error, favor de revisar su bandeja de entrada!.',
+      'type': 'SMS',
+      'created_at': Timestamp.now(),
+      'updated_at': Timestamp.now(),
+      "isActive": false
+    });
+
+    await templates.doc('reminder_message').set({
+      'title': 'Recordatorio de Tarea',
+      'body':
+          'Este es un recordatorio para completar la tarea asignada.',
+      'type': 'SMS',
+      'created_at': Timestamp.now(),
+      'updated_at': Timestamp.now(),
+      "isActive": true
+    });
+  }
 }

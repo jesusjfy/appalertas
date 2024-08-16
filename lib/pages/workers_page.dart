@@ -16,8 +16,7 @@ class WorkersPage extends StatelessWidget {
 
   void _notifyHead(BuildContext context) async {
     try {
-      await _smsService.sendSms(area.head.phoneNumber,
-          'Ocurrió un error, favor de revisar su bandeja de entrada!');
+      await _smsService.sendSms(area.head.phoneNumber);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('SMS enviado al jefe de área: ${area.head.name}')),
@@ -32,8 +31,7 @@ class WorkersPage extends StatelessWidget {
   void _notifyWorkers(BuildContext context) async {
     try {
       for (var worker in area.workers) {
-        await _smsService.sendSms(worker.phoneNumber,
-            'Ocurrió un error, favor de revisar su bandeja de entrada!');
+        await _smsService.sendSms(worker.phoneNumber);
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('SMS enviados a los trabajadores del área')),
@@ -47,12 +45,10 @@ class WorkersPage extends StatelessWidget {
 
   void _notifyAll(BuildContext context) async {
     try {
-      await _smsService.sendSms(area.head.phoneNumber,
-          'Ocurrió un error, favor de revisar su bandeja de entrada!');
+      await _smsService.sendSms(area.head.phoneNumber);
 
       for (var worker in area.workers) {
-        await _smsService.sendSms(worker.phoneNumber,
-            'Ocurrió un error, favor de revisar su bandeja de entrada!');
+        await _smsService.sendSms(worker.phoneNumber);
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -156,8 +152,7 @@ class WorkersPage extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.message),
                             onPressed: () => _smsService.sendSms(
-                                worker.phoneNumber,
-                                'Ocurrió un error, favor de revisar su bandeja de entrada!'),
+                                worker.phoneNumber),
                             tooltip: 'Enviar SMS',
                           ),
                           IconButton(
