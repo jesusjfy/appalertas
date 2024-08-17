@@ -1,9 +1,11 @@
 import 'package:appalertas/models/company_model.dart';
 import 'package:appalertas/pages/googlemaps_page.dart';
 import 'package:appalertas/pages/home_page.dart';
+import 'package:appalertas/pages/login_page.dart';
 import 'package:appalertas/pages/notificationhistory_page.dart';
 import 'package:appalertas/pages/settings_page.dart';
 import 'package:appalertas/services/firestore_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -26,6 +28,13 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -55,6 +64,17 @@ class _MainPageState extends State<MainPage> {
         ];
 
         return Scaffold(
+          appBar: AppBar(
+            title: Text('App Alertas'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.logout),
+                onPressed: _signOut,
+                tooltip: 'Cerrar Sesión',
+              ),
+            ],
+            backgroundColor: Colors.blue[800],
+          ),
           body: _pages[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
